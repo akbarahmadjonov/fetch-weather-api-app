@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson-10 task</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>    
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="hold-it">
+        <div class="block">
+            <input v-model='a' v-on:keyup.enter='findIt' placeholder="Search millions of weather..."> 
+            <h1> {{items.main.temp}}<sup>o</sup></h1>
+        <div id="all">
+            <div class="block-2">
+                <p> <span><i class="fas fa-map-marker-alt"></i></span> {{items.name}}  </p>
+                <p class="temp"> <span><i class="fas fa-thermometer-quarter"></i></span> Min-Temp: {{items.main.temp_min}} </p>
+            </div>
+            <div class="block-2">
+                <p> &#176;Deg {{ items.wind.deg }}</p>
+                <p class="air"> Air-Pressure: {{ items.main.pressure }} </p>
+            </div>
+            <p> <span><i v-if='items.weather[0].main ==="Clouds"' class="fas fa-cloud"></i></span> Status: {{ items.weather[0].main }} </p>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+<script src="axios.js"></script>
+<script src="vue.js"></script>
+
+<script>
+    new Vue ({
+        el: '#app',
+        data: {
+            items: '',
+            a: 'Qatar',
+        },
+        methods: {  
+            findIt(){
+                axios.get('http://api.openweathermap.org/data/2.5/weather?q=' + this.a + '&units=metric&appid=29436beecd3fdfbe6226e437feca7834').then(response => this.items = response.data);
+            },
+        },
+        mounted() {
+            this.findIt()
+        },
+    });
+</script>
+</body>
+</html>
